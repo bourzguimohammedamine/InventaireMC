@@ -1,0 +1,22 @@
+name: Build WinCE App
+
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: windows-2019
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.1
+
+    - name: Build Project
+      run: msbuild InventaireMC2180.csproj /p:Configuration=Release
+
+    - name: Upload Executable
+      uses: actions/upload-artifact@v3
+      with:
+        name: InventaireMC2180-WinCE
+        path: bin/Release/InventaireMC2180.exe
